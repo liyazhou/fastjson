@@ -2,58 +2,56 @@ package com.alibaba.fastjson.serializer;
 
 public class SerialContext {
 
-    private final SerialContext parent;
-
-    private final Object        object;
-
-    private final Object        fieldName;
-
-    private int                 features;
-
-    private int                 fieldFeatures;
+    public final SerialContext parent;
+    public final Object        object;
+    public final Object        fieldName;
+    public final int           features;
 
     public SerialContext(SerialContext parent, Object object, Object fieldName, int features, int fieldFeatures){
         this.parent = parent;
         this.object = object;
         this.fieldName = fieldName;
         this.features = features;
-        this.fieldFeatures = fieldFeatures;
     }
 
-    public SerialContext getParent() {
-        return parent;
-    }
-
-    public Object getObject() {
-        return object;
-    }
-
-    public Object getFieldName() {
-        return fieldName;
-    }
-
-    public String getPath() {
+    public String toString() {
         if (parent == null) {
             return "$";
         } else {
             if (fieldName instanceof Integer) {
-                return parent.getPath() + "[" + fieldName + "]";
+                return parent.toString() + "[" + fieldName + "]";
             } else {
-                return parent.getPath() + "." + fieldName;
+                return parent.toString() + "." + fieldName;
             }
 
         }
     }
 
-    public String toString() {
-        return getPath();
+    /**
+     * @deprecated
+     */
+    public SerialContext getParent() {
+        return parent;
     }
 
-    public int getFeatures() {
-        return features;
+    /**
+     * @deprecated
+     */
+    public Object getObject() {
+        return object;
     }
 
-    public boolean isEnabled(SerializerFeature feature) {
-        return SerializerFeature.isEnabled(features, fieldFeatures, feature);
+    /**
+     * @deprecated
+     */
+    public Object getFieldName() {
+        return fieldName;
+    }
+
+    /**
+     * @deprecated
+     */
+    public String getPath() {
+        return toString();
     }
 }
